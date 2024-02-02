@@ -173,7 +173,7 @@ export function HomeBody() {
             right="2" // 배너의 우측에서 시작
             zIndex="10" // 다른 요소보다 위에 오도록 z-index 설정
             p="4" // 패딩 값
-            bg="rgba(255, 255, 255, 0.5)" // 배경색
+            bg="rgba(255, 255, 255, 0.1)" // 배경색
             boxShadow="lg" // 그림자 효과
             maxW="sm" // 최대 너비 설정
             overflow="hidden" // 내용이 넘치면 숨김
@@ -221,6 +221,11 @@ export function HomeBody() {
                   boxShadow: "none", // 포커스 시 박스 그림자 제거
                 }}
                 onChange={(e) => setKeyword(e.target.value)}
+                onKeyPress={(e) => {
+                  if (e.key === "Enter") {
+                    handleSearch(); // 엔터 키를 누르면 handleSearch 함수 실행
+                  }
+                }}
               />
             </VStack>
 

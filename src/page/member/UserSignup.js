@@ -558,7 +558,7 @@ export function UserSignup() {
             <FormControl mb={3}>
               <Flex gap={2}>
                 <FormLabel
-                  w={160}
+                  w={164}
                   textAlign={"center"}
                   display={"flex"}
                   alignItems={"center"}
@@ -568,11 +568,18 @@ export function UserSignup() {
                 <Input
                   type="number"
                   value={sendSMS}
-                  onChange={(e) => setSendSMS(e.target.value)}
+                  onChange={(e) => {
+                    setSendSMS(e.target.value);
+                    setSendSmsOk(false);
+                  }}
                 />
-                <Button w={95} onClick={handleSMSOk}>
-                  확인
-                </Button>
+                {!sendSmsOk ? (
+                  <Button w={100} onClick={handleSMSOk}>
+                    확인
+                  </Button>
+                ) : (
+                  <Box w={120} visibility="hidden"></Box> // 버튼 대신 빈 박스를 렌더링
+                )}
               </Flex>
             </FormControl>
           )}

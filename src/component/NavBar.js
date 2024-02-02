@@ -40,6 +40,7 @@ export function NavBar() {
   const navigate = useNavigate();
   const urlParams = new URLSearchParams();
   const location = useLocation();
+  const [keyword, setKeyword] = useState("");
 
   const [showMenu, setShowMenu] = useState(false);
 
@@ -101,14 +102,16 @@ export function NavBar() {
       });
   }
 
+  function handleSearch() {
+    const params = new URLSearchParams();
+    params.set("k", keyword);
+
+    const queryString = params.toString();
+    navigate(`/hotel/?${queryString}`);
+  }
+
   return (
     <Box>
-      {/* ------------------ 최상단 배너 ------------------ */}
-      {/*<Flex bor justifyContent="center" w="100%" mt={-8}>*/}
-      {/*  <Box w={"75%"} justifyContent={"center"} mt={"30px"} mb={8}>*/}
-      {/*    <Image src="https://study1993garbi.s3.ap-northeast-2.amazonaws.com/travel/sourceFile/imgeFile/%E1%84%87%E1%85%A2%E1%84%82%E1%85%A52.jpeg" />*/}
-      {/*  </Box>*/}
-      {/*</Flex>*/}
       <Flex
         fontWeight={"700"}
         fontFamily={"GmarketSansMedium"}
@@ -148,9 +151,21 @@ export function NavBar() {
                     background={"#f5f6f6"}
                     placeholder="검색어를 입력해 주세요."
                     fontSize={"13px"}
+                    onChange={(e) => setKeyword(e.target.value)}
+                    onKeyPress={(e) => {
+                      if (e.key === "Enter") {
+                        handleSearch(); // 엔터 키를 누르면 handleSearch 함수 실행
+                      }
+                    }}
                   />
                   <InputRightElement
-                    children={<FontAwesomeIcon icon={faMagnifyingGlass} />}
+                    children={
+                      <FontAwesomeIcon
+                        onClick={handleSearch}
+                        icon={faMagnifyingGlass}
+                        style={{ cursor: "pointer" }}
+                      />
+                    }
                   />
                 </InputGroup>
               </Flex>

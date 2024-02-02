@@ -10,6 +10,7 @@ import {
   SimpleGrid,
   Spinner,
   Text,
+  VStack,
 } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
@@ -114,49 +115,59 @@ function TransSearchComponent() {
 
   return (
     <Flex justifyContent="center" w="100%">
-      <Box w={"65%"} justifyContent={"center"} mt={"30px"}>
+      <Box w={"65%"} justifyContent={"center"} mt={"50px"}>
         {/* ------------------- 검색바 ------------------- */}
         <Box
           display={"flex"}
-          justifyContent={"space-evenly"}
+          justifyContent={"center"}
           alignItems={"center"}
-          // border={"1px solid gray"}
+          border={"1px solid gray"}
           boxSizing="border-box"
           mb={10}
-          w={"90%"}
+          w={"30%"}
           h={"90px"}
-          ml={"5%"}
+          ml={"34%"}
           borderRadius={"20px"}
-          shadow={"1px 1px 3px 1px #dadce0"}
+          boxShadow={"0px 8px 15px #0000001A"}
+          border={"1px solid #eeeeee"}
         >
-          <Input
-            w={"50%"}
-            h={"60%"}
-            border={"none"}
-            placeholder="어디로 떠나시나요?"
-            style={{ fontSize: "1.5rem" }}
-            _focus={{
-              boxShadow: "1px 1px 3px 1px #dadce0 inset", // 포커스 시 박스 그림자 제거
-            }}
-            value={keyword}
-            onChange={(e) => setKeyword(e.target.value)}
-            onKeyPress={(e) => {
-              if (e.key === "Enter") {
-                handleSearch();
-              }
-            }}
-          />
+          <VStack alignItems={"flex-start"}>
+            <p
+              style={{
+                fontSize: "12px",
+                marginBottom: "-10px",
+                marginLeft: "17px",
+                color: "gray",
+              }}
+            >
+              출발 지역
+            </p>
+            <Input
+              fontSize={"16px"}
+              w={"220px"}
+              border={"none"}
+              placeholder="출발지를 입력해주세요."
+              style={{ fontSize: "14px" }}
+              _focus={{
+                boxShadow: "none", // 포커스 시 박스 그림자 제거
+              }}
+              value={keyword}
+              onChange={(e) => setKeyword(e.target.value)}
+              onKeyPress={(e) => {
+                if (e.key === "Enter") {
+                  handleSearch();
+                }
+              }}
+            />
+          </VStack>
 
           <Button
             h={"50px"}
             color={"black"}
             borderRadius={"10px"}
-            shadow={"1px 1px 3px 1px #dadce0"}
-            backgroundColor={"gray.300"}
+            bg={"white"}
             _hover={{
-              color: "white",
-              backgroundColor: "blue.500",
-              shadow: "1px 1px 3px 1px #dadce0 inset",
+              color: "blue.500",
             }}
             onClick={handleSearch}
             fontSize={21}
@@ -246,7 +257,7 @@ export function TransPortList() {
           />
         )}
       </Box>
-      <Center w={"100%"} h={"100px"} mt={5}>
+      <Center w={"100%"} h={"100px"} mt={5} mb={10}>
         {/*// 검색창 */}
         <TransSearchComponent />
       </Center>
@@ -266,12 +277,22 @@ export function TransPortList() {
         >
           <Box fontWeight={"900"} fontSize={"1.5rem"}>
             {params.get("type") === "bus" && (
-              <Box color={"black"} fontSize={"40px"} fontSize={"1.8rem"}>
+              <Box
+                color={"black"}
+                fontSize={"40px"}
+                fontSize={"1.8rem"}
+                textAlign={"start"}
+              >
                 버스 여행
               </Box>
             )}
             {params.get("type") === "air" && (
-              <Box color={"black"} fontSize={"40px"} fontSize={"1.8rem"}>
+              <Box
+                color={"black"}
+                fontSize={"40px"}
+                fontSize={"1.8rem"}
+                textAlign={"start"}
+              >
                 항공 여행
               </Box>
             )}
@@ -363,20 +384,6 @@ export function TransPortList() {
                             {/*{transport.transPrice}*/}
                             &nbsp;원
                           </Box>
-
-                          <Box
-                            position="fixed" // 절대 위치를 사용해 오버레이 설정
-                            top="300" // 배너의 상단에서 시작
-                            right="2" // 배너의 우측에서 시작
-                            zIndex="10" // 다른 요소보다 위에 오도록 z-index 설정
-                            p="4" // 패딩 값
-                            bg="rgba(255, 255, 255, 0.3)" // 배경색
-                            boxShadow="lg" // 그림자 효과
-                            maxW="sm" // 최대 너비 설정
-                            overflow="hidden" // 내용이 넘치면 숨김
-                          >
-                            <RecentViewed />
-                          </Box>
                         </Box>
                       </Box>
                       <Box
@@ -385,10 +392,11 @@ export function TransPortList() {
                         right="2" // 배너의 우측에서 시작
                         zIndex="10" // 다른 요소보다 위에 오도록 z-index 설정
                         p="4" // 패딩 값
-                        bg="rgba(255, 255, 255, 0.3)" // 배경색
+                        bg="rgba(255, 255, 255, 0.1)" // 배경색
                         boxShadow="lg" // 그림자 효과
                         maxW="sm" // 최대 너비 설정
                         overflow="hidden" // 내용이 넘치면 숨김
+                        borderRadius="15px"
                       >
                         <RecentViewed />
                       </Box>

@@ -16,6 +16,7 @@ import {
   Center,
   Stack,
   HStack,
+  VStack,
 } from "@chakra-ui/react";
 import {
   useLocation,
@@ -30,6 +31,7 @@ import {
   faAngleLeft,
   faAngleRight,
   faHeart,
+  faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMap } from "@fortawesome/free-regular-svg-icons";
@@ -117,19 +119,68 @@ function SearchComponent() {
 
   return (
     <Center mt={5}>
-      <Flex my={"30px"}>
-        <Input
-          w={"500px"}
-          value={keyword}
-          placeholder={"호텔명, 지명, 숙소 타입, 테마, 반려견 동반 여부, 레저"}
-          onChange={(e) => setKeyword(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              handleSearch();
-            }
-          }}
-        />
-        <Button onClick={handleSearch}>검색</Button>
+      <Flex
+        my={"30px"}
+        border={"1px solid #eeeeee"}
+        borderRadius={"20px"}
+        boxShadow={"0px 8px 15px #0000001A"}
+        h={"100px"}
+      >
+        <Box
+          mt={2}
+          display={"flex"}
+          justifyContent={"center"}
+          alignItems={"center"}
+          boxSizing="border-box"
+          mb={10}
+          w={"30%"}
+          h={"90px"}
+          ml={"34%"}
+          borderRadius={"20px"}
+        >
+          <VStack alignItems={"flex-start"}>
+            <p
+              style={{
+                fontSize: "12px",
+                marginBottom: "-10px",
+                marginLeft: "17px",
+                color: "gray",
+              }}
+            >
+              숙소명, 지명, 타입, 테마 등 검색해주세요.
+            </p>
+            <Input
+              fontSize={"16px"}
+              w={"300px"}
+              border={"none"}
+              placeholder="검색해주세요."
+              style={{ fontSize: "14px" }}
+              _focus={{
+                boxShadow: "none", // 포커스 시 박스 그림자 제거
+              }}
+              value={keyword}
+              onChange={(e) => setKeyword(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleSearch();
+                }
+              }}
+            />
+          </VStack>
+          <Button
+            h={"50px"}
+            color={"black"}
+            borderRadius={"10px"}
+            bg={"white"}
+            _hover={{
+              color: "blue.500",
+            }}
+            fontSize={21}
+            onClick={handleSearch}
+          >
+            <FontAwesomeIcon icon={faMagnifyingGlass} />
+          </Button>
+        </Box>
       </Flex>
     </Center>
   );
@@ -156,23 +207,6 @@ export function Hotel() {
     });
   }, [location]);
 
-  // useEffect(() => {x
-  //   axios.get("/api/hotel/price").then((response) => {
-  //     const price = response.data.hotelList.map((hotel) => hotel.price);
-  //     setHotelList(price);
-  //   });
-  // }, [location]);
-
-  // // TODO : Login 하고 Hotel 페이지 접속시 userId 정보 얻기
-  // useEffect(() => {
-  //   axios
-  //     .get(`/api/hotel/wishList/` + params.get("userId"))
-  //     .then((response) => {
-  //       setWishlist(response.data);
-  //       console.log(response.data);
-  //     });
-  // }, []);
-
   const handleUpdateToWishlist = (hotelId) => {
     axios.get(`/api/hotel/reserv/id/${hotelId}`).then((response) => {
       const hotelData = response.data;
@@ -186,49 +220,6 @@ export function Hotel() {
       });
     });
   };
-  // 메인 화면에서 유저가 좋아요한 목록 불러오기 ------------------------------------------------------
-  // useEffect(() => {
-  //   axios.get("/api/hotel/list?" + params).then((response) => {
-  //     setHotelList(response.data.hotelList);
-  //     setPageInfo(response.data.pageInfo);
-  //     // 새로운 배열 생성
-  //     const newHotelIdArray = response.data.hotelList.map((hotel) => hotel.hid);
-  //
-  //     // 새로운 배열을 상태로 설정
-  //     setHotelIdArray(newHotelIdArray);
-  //   });
-  // }, [location]);
-
-  // useEffect(() => {
-  //     // 위시리스트를 저장할 임시 배열
-  //     let newWishlist = [];
-  //
-  //     // 모든 호텔 ID에 대해 위시리스트 정보를 가져옴
-  //     const fetchWishList = async () => {
-  //       for (const hotelId of hotelIdArray) {
-  //         try {
-  //           const response = await axios.get(`/api/hotel/wishList/${hotelId}`);
-  //           // 각 요청의 결과를 임시 배열에 추가
-  //           newWishlist = [...newWishlist, ...response.data];
-  //         } catch (error) {
-  //           console.error(
-  //             "Error fetching wishlist for hotel ID:",
-  //             hotelId,
-  //             error,
-  //           );
-  //         }
-  //       }
-  //
-  //       // 위시리스트 상태 업데이트
-  //       setWishlist(newWishlist);
-  //     };
-  //
-  //     // hotelIdArray가 비어있지 않으면 위시리스트 정보를 가져옴
-  //     if (hotelIdArray.length > 0) {
-  //       fetchWishList();
-  //     }
-  //   }, [hotelIdArray]); // hotelIdArray가 변경될 때마다 이 useEffect를 다시 실행
-  // ------------------------------------------------------------------------------------------
 
   const toggleWishlist = (hotelId) => {
     if (login !== "") {
@@ -324,11 +315,6 @@ export function Hotel() {
           navi={"/hotel/?k=캠핑"}
         />
 
-        {/*<GrayscaleImageWithText*/}
-        {/*  imageUrl="https://study1993garbi.s3.ap-northeast-2.amazonaws.com/travel/board/46/3b1eb541-46d9-4bef-abc4-c37d77e3c21b.jpg"*/}
-        {/*  text="전망"*/}
-        {/*  navi={"/hotel/?k=오션뷰"}*/}
-        {/*/>*/}
         <GrayscaleImageWithText
           imageUrl="https://study1993garbi.s3.ap-northeast-2.amazonaws.com/travel/board/46/6ad4bd95-f086-437d-97e3-14d12155ddfe.jpg"
           text="촌캉스"
@@ -339,11 +325,7 @@ export function Hotel() {
           text="한옥"
           navi={"/hotel/?k=한옥"}
         />
-        {/*<GrayscaleImageWithText*/}
-        {/*  imageUrl="https://study1993garbi.s3.ap-northeast-2.amazonaws.com/travel/board/46/732edad8-3ae0-49a8-a451-29a8010dcc0c.jpg"*/}
-        {/*  text="자연가옥"*/}
-        {/*  navi={"/hotel/?k=자연가옥"}*/}
-        {/*/>*/}
+
         <GrayscaleImageWithText
           imageUrl="https://study1993garbi.s3.ap-northeast-2.amazonaws.com/travel/board/46/957f8022-dfd7-426c-99fd-77ed792f6d7a.jpg"
           text="서핑"
@@ -379,14 +361,6 @@ export function Hotel() {
               호텔 추가
             </Button>
           )}
-          {/*<Button*/}
-          {/*  ml={"20px"}*/}
-          {/*  variant={"solid"}*/}
-          {/*  color={"green"}*/}
-          {/*  onClick={() => navigate("/reserv/" + id)}*/}
-          {/*>*/}
-          {/*  호텔 삭제*/}
-          {/*</Button>*/}
         </Flex>
       </Box>
 
@@ -551,7 +525,7 @@ export function Hotel() {
                     right="2" // 배너의 우측에서 시작
                     zIndex="10" // 다른 요소보다 위에 오도록 z-index 설정
                     p="4" // 패딩 값
-                    bg="rgba(255, 255, 255, 0.3)" // 배경색
+                    bg="rgba(255, 255, 255, 0.1)" // 배경색
                     boxShadow="lg" // 그림자 효과
                     maxW="sm" // 최대 너비 설정
                     overflow="hidden" // 내용이 넘치면 숨김
