@@ -158,6 +158,70 @@ export function HomeBody() {
     }
   }
 
+  const cardStyle = {
+    _hover: { cursor: "pointer" },
+    w: "auto",
+    overflow: "hidden",
+    position: "relative",
+    onMouseMove: (e) => {
+      const x = e.nativeEvent.offsetX;
+      const y = e.nativeEvent.offsetY;
+      e.currentTarget.style.transform = `perspective(350px) rotateX(${
+        (4 / 30) * y - 20
+      }deg) rotateY(${(-1 / 5) * x + 20}deg)`;
+    },
+    onMouseLeave: (e) => {
+      e.currentTarget.style.transform =
+        "perspective(350px) rotateY(0deg) rotateX(0deg)";
+    },
+    transition: "all 0.1s",
+  };
+
+  const cardStyle2 = {
+    position: "absolute",
+    top: "0",
+    left: "0",
+    w: "full",
+    h: "300px",
+    bg: "linear-gradient(105deg, transparent 40%, rgba(255, 219, 112, 0.8) 45%, rgba(132, 50, 255, 0.6) 50%, transparent 54%)",
+    filter: "brightness(1.1) opacity(0)",
+    mixBlendMode: "color-dodge",
+    backgroundSize: "150% 150%",
+    backgroundPosition: "100%",
+    transition: "all 0.1s",
+    zIndex: "1",
+  };
+
+  const cardImgStyle = {
+    cursor: "pointer",
+    w: "100%",
+    h: "300px",
+    borderRadius: "10px",
+    transition: "0.2s ease-in-out",
+    _hover: {
+      transform: "scale(1.07)",
+    },
+    zIndex: "2",
+  };
+
+  const boxStyle = {
+    color: "gray.500",
+    fontWeight: "semibold",
+    letterSpacing: "wide",
+    fontSize: "xs",
+    textTransform: "uppercase",
+    ml: "2",
+  };
+
+  const boxStyle2 = {
+    fontWeight: "bold",
+    fontSize: "14px",
+    as: "h4",
+    lineHeight: "tight",
+    textAlign: "center",
+    ml: "12px",
+  };
+
   return (
     <Box fontWeight={"700"} fontFamily={"GmarketSansMedium"}>
       {/* ------------------- 배너이미지 ------------------- */}
@@ -567,12 +631,14 @@ export function HomeBody() {
                       _hover={{
                         transform: "scale(1.20)",
                       }}
-                      maxW="sm"
-                      w={"170px"}
+                      // maxW="sm"
+                      // w={"170px"}
+                      w={"100%"}
                       overflow="hidden"
                     >
                       <Box
-                        w={"170px"}
+                        // w={"170px"}
+                        w={"100%"}
                         h={"170px"}
                         borderRadius={"50%"}
                         position="relative"
@@ -582,7 +648,8 @@ export function HomeBody() {
                           src={hotel.mainImgUrl}
                           alt={hotel.name}
                           cursor={"pointer"}
-                          w={"170px"}
+                          // w={"170px"}
+                          w={"100%"}
                           h={"170px"}
                           borderRadius={"50%"}
                         />
@@ -629,71 +696,18 @@ export function HomeBody() {
           <SimpleGrid columns={5} spacing={5} my={"20px"} w={"full"}>
             {hotelList && hotelList.length > 0 && (
               <>
-                <Box
-                  onClick={() => navigate("hotel/?k=수영장")}
-                  _hover={{ cursor: "pointer" }}
-                  w={"auto"}
-                  overflow="hidden"
-                  position="relative"
-                  onMouseMove={(e) => {
-                    const x = e.nativeEvent.offsetX;
-                    const y = e.nativeEvent.offsetY;
-                    e.currentTarget.style.transform = `perspective(350px) rotateX(${
-                      (4 / 30) * y - 20
-                    }deg) rotateY(${(-1 / 5) * x + 20}deg)`;
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform =
-                      "perspective(350px) rotateY(0deg) rotateX(0deg)";
-                  }}
-                  transition="all 0.1s"
-                >
-                  <Box
-                    position="absolute"
-                    top="0"
-                    left="0"
-                    w="full"
-                    h="300px"
-                    bg="linear-gradient(105deg, transparent 40%, rgba(255, 219, 112, 0.8) 45%, rgba(132, 50, 255, 0.6) 50%, transparent 54%)"
-                    filter="brightness(1.1) opacity(0)"
-                    mixBlendMode="color-dodge"
-                    backgroundSize="150% 150%"
-                    backgroundPosition="100%"
-                    transition="all 0.1s"
-                    zIndex="1"
-                  />
+                <Box onClick={() => navigate("hotel/?k=수영장")} {...cardStyle}>
+                  <Box {...cardStyle2} />
                   <Image
                     onClick={() => navigate("/")}
                     src="https://www.gagopatour.com/data/item/1646033618/7Iuk64K07IiY7JiB7J6l.jpg"
-                    cursor={"pointer"}
-                    w={"100%"}
-                    h={"300px"}
-                    borderRadius={"10px"}
-                    transition="0.2s ease-in-out"
-                    _hover={{
-                      transform: "scale(1.07)",
-                    }}
-                    zIndex="2"
+                    {...cardImgStyle}
                   />
                   <Box mt={5} zIndex="2">
                     <Box display="flex" alignItems="baseline">
-                      <Box
-                        color="gray.500"
-                        fontWeight="semibold"
-                        letterSpacing="wide"
-                        fontSize="xs"
-                        textTransform="uppercase"
-                        ml="2"
-                      />
+                      <Box {...boxStyle} />
                     </Box>
-                    <Box
-                      fontWeight="bold"
-                      fontSize={"14px"}
-                      as="h4"
-                      lineHeight="tight"
-                      textAlign={"center"}
-                      ml={"12px"}
-                    >
+                    <Box {...boxStyle2}>
                       <Text>수영장 있는 숙소</Text>
                       <Badge ml={"5px"}>{hotelList.lodgingType}</Badge>
                       {hotelList.lodgingType === "호텔" && (
@@ -705,69 +719,19 @@ export function HomeBody() {
 
                 <Box
                   onClick={() => navigate("hotel/?k=캠핑, 카라반")}
-                  _hover={{ cursor: "pointer" }}
-                  w={"auto"}
-                  overflow="hidden"
-                  position="relative"
-                  onMouseMove={(e) => {
-                    const x = e.nativeEvent.offsetX;
-                    const y = e.nativeEvent.offsetY;
-                    e.currentTarget.style.transform = `perspective(350px) rotateX(${
-                      (4 / 30) * y - 20
-                    }deg) rotateY(${(-1 / 5) * x + 20}deg)`;
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform =
-                      "perspective(350px) rotateY(0deg) rotateX(0deg)";
-                  }}
-                  transition="all 0.1s"
+                  {...cardStyle}
                 >
-                  <Box
-                    position="absolute"
-                    top="0"
-                    left="0"
-                    w="full"
-                    h="300px"
-                    bg="linear-gradient(105deg, transparent 40%, rgba(255, 219, 112, 0.8) 45%, rgba(132, 50, 255, 0.6) 50%, transparent 54%)"
-                    filter="brightness(1.1) opacity(0)"
-                    mixBlendMode="color-dodge"
-                    backgroundSize="150% 150%"
-                    backgroundPosition="100%"
-                    transition="all 0.1s"
-                    zIndex="1"
-                  />
+                  <Box {...cardStyle2} />
                   <Image
                     onClick={() => navigate("/")}
                     src="https://www.condo24.com/conphoto/171522810779.jpg"
-                    cursor={"pointer"}
-                    w={"100%"}
-                    h={"300px"}
-                    borderRadius={"10px"}
-                    transition="0.2s ease-in-out"
-                    _hover={{
-                      transform: "scale(1.07)",
-                    }}
-                    zIndex="2"
+                    {...cardImgStyle}
                   />
                   <Box mt={5} zIndex="2">
                     <Box display="flex" alignItems="baseline">
-                      <Box
-                        color="gray.500"
-                        fontWeight="semibold"
-                        letterSpacing="wide"
-                        fontSize="xs"
-                        textTransform="uppercase"
-                        ml="2"
-                      />
+                      <Box {...boxStyle} />
                     </Box>
-                    <Box
-                      fontWeight="bold"
-                      fontSize={"14px"}
-                      as="h4"
-                      lineHeight="tight"
-                      textAlign={"center"}
-                      ml={"12px"}
-                    >
+                    <Box {...boxStyle2}>
                       <Text>글램핑, 카라반 숙소</Text>
                       <Badge ml={"5px"}>{hotelList.lodgingType}</Badge>
                       {hotelList.lodgingType === "호텔" && (
@@ -777,71 +741,18 @@ export function HomeBody() {
                   </Box>
                 </Box>
 
-                <Box
-                  onClick={() => navigate("hotel/?k=반려견")}
-                  _hover={{ cursor: "pointer" }}
-                  w={"auto"}
-                  overflow="hidden"
-                  position="relative"
-                  onMouseMove={(e) => {
-                    const x = e.nativeEvent.offsetX;
-                    const y = e.nativeEvent.offsetY;
-                    e.currentTarget.style.transform = `perspective(350px) rotateX(${
-                      (4 / 30) * y - 20
-                    }deg) rotateY(${(-1 / 5) * x + 20}deg)`;
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform =
-                      "perspective(350px) rotateY(0deg) rotateX(0deg)";
-                  }}
-                  transition="all 0.1s"
-                >
-                  <Box
-                    position="absolute"
-                    top="0"
-                    left="0"
-                    w="full"
-                    h="300px"
-                    bg="linear-gradient(105deg, transparent 40%, rgba(255, 219, 112, 0.8) 45%, rgba(132, 50, 255, 0.6) 50%, transparent 54%)"
-                    filter="brightness(1.1) opacity(0)"
-                    mixBlendMode="color-dodge"
-                    backgroundSize="150% 150%"
-                    backgroundPosition="100%"
-                    transition="all 0.1s"
-                    zIndex="1"
-                  />
+                <Box onClick={() => navigate("hotel/?k=반려견")} {...cardStyle}>
+                  <Box {...cardStyle2} />
                   <Image
                     onClick={() => navigate("/")}
                     src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzEwMjdfMTY2%2FMDAxNjk4MzMyOTUwMTU0.abdxZp1psY9qPJl1XrSuCt710v-oHg1B_jKuLAKTjqAg.GDUgM5VOFfY8pETBtsdiJ2Z46O7_R9V43s55Tl6oJWog.JPEG.rkgp3310%2F1698332948530.jpg&type=sc960_832"
-                    cursor={"pointer"}
-                    w={"100%"}
-                    h={"300px"}
-                    borderRadius={"10px"}
-                    transition="0.2s ease-in-out"
-                    _hover={{
-                      transform: "scale(1.07)",
-                    }}
-                    zIndex="2"
+                    {...cardImgStyle}
                   />
                   <Box mt={5} zIndex="2">
                     <Box display="flex" alignItems="baseline">
-                      <Box
-                        color="gray.500"
-                        fontWeight="semibold"
-                        letterSpacing="wide"
-                        fontSize="xs"
-                        textTransform="uppercase"
-                        ml="2"
-                      />
+                      <Box {...boxStyle} />
                     </Box>
-                    <Box
-                      fontWeight="bold"
-                      fontSize={"14px"}
-                      as="h4"
-                      lineHeight="tight"
-                      textAlign={"center"}
-                      ml={"12px"}
-                    >
+                    <Box {...boxStyle2}>
                       <Text>반려견 동반 숙소</Text>
                       <Badge ml={"5px"}>{hotelList.lodgingType}</Badge>
                       {hotelList.lodgingType === "호텔" && (
@@ -853,69 +764,19 @@ export function HomeBody() {
 
                 <Box
                   onClick={() => navigate("hotel/?k=가족, 친구")}
-                  _hover={{ cursor: "pointer" }}
-                  w={"auto"}
-                  overflow="hidden"
-                  position="relative"
-                  onMouseMove={(e) => {
-                    const x = e.nativeEvent.offsetX;
-                    const y = e.nativeEvent.offsetY;
-                    e.currentTarget.style.transform = `perspective(350px) rotateX(${
-                      (4 / 30) * y - 20
-                    }deg) rotateY(${(-1 / 5) * x + 20}deg)`;
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform =
-                      "perspective(350px) rotateY(0deg) rotateX(0deg)";
-                  }}
-                  transition="all 0.1s"
+                  {...cardStyle}
                 >
-                  <Box
-                    position="absolute"
-                    top="0"
-                    left="0"
-                    w="full"
-                    h="300px"
-                    bg="linear-gradient(105deg, transparent 40%, rgba(255, 219, 112, 0.8) 45%, rgba(132, 50, 255, 0.6) 50%, transparent 54%)"
-                    filter="brightness(1.1) opacity(0)"
-                    mixBlendMode="color-dodge"
-                    backgroundSize="150% 150%"
-                    backgroundPosition="100%"
-                    transition="all 0.1s"
-                    zIndex="1"
-                  />
+                  <Box {...cardStyle2} />
                   <Image
                     onClick={() => navigate("/")}
                     src="https://www.condo24.com/conphoto/165300963191.jpg"
-                    cursor={"pointer"}
-                    w={"100%"}
-                    h={"300px"}
-                    borderRadius={"10px"}
-                    transition="0.2s ease-in-out"
-                    _hover={{
-                      transform: "scale(1.07)",
-                    }}
-                    zIndex="2"
+                    {...cardImgStyle}
                   />
                   <Box mt={5} zIndex="2">
                     <Box display="flex" alignItems="baseline">
-                      <Box
-                        color="gray.500"
-                        fontWeight="semibold"
-                        letterSpacing="wide"
-                        fontSize="xs"
-                        textTransform="uppercase"
-                        ml="2"
-                      />
+                      <Box {...boxStyle} />
                     </Box>
-                    <Box
-                      fontWeight="bold"
-                      fontSize={"14px"}
-                      as="h4"
-                      lineHeight="tight"
-                      textAlign={"center"}
-                      ml={"12px"}
-                    >
+                    <Box {...boxStyle2}>
                       <Text>가족, 친구들과 함께 갈 숙소</Text>
                       <Badge ml={"5px"}>{hotelList.lodgingType}</Badge>
                       {hotelList.lodgingType === "호텔" && (
@@ -925,72 +786,19 @@ export function HomeBody() {
                   </Box>
                 </Box>
 
-                <Box
-                  onClick={() => navigate("hotel/?k=연인")}
-                  _hover={{ cursor: "pointer" }}
-                  w={"auto"}
-                  overflow="hidden"
-                  position="relative"
-                  onMouseMove={(e) => {
-                    const x = e.nativeEvent.offsetX;
-                    const y = e.nativeEvent.offsetY;
-                    e.currentTarget.style.transform = `perspective(350px) rotateX(${
-                      (4 / 30) * y - 20
-                    }deg) rotateY(${(-1 / 5) * x + 20}deg)`;
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform =
-                      "perspective(350px) rotateY(0deg) rotateX(0deg)";
-                  }}
-                  transition="all 0.1s"
-                >
-                  <Box
-                    position="absolute"
-                    top="0"
-                    left="0"
-                    w="full"
-                    h="300px"
-                    bg="linear-gradient(105deg, transparent 40%, rgba(255, 219, 112, 0.8) 45%, rgba(132, 50, 255, 0.6) 50%, transparent 54%)"
-                    filter="brightness(1.1) opacity(0)"
-                    mixBlendMode="color-dodge"
-                    backgroundSize="150% 150%"
-                    backgroundPosition="100%"
-                    transition="all 0.1s"
-                    zIndex="1"
-                  />
+                <Box onClick={() => navigate("hotel/?k=연인")} {...cardStyle}>
+                  <Box {...cardStyle2} />
                   <Image
                     onClick={() => navigate("/")}
-                    src={hotelList[4].mainImgUrl}
+                    src={hotelList[3].mainImgUrl}
                     alt={hotelList.name}
-                    cursor={"pointer"}
-                    w={"100%"}
-                    h={"300px"}
-                    borderRadius={"10px"}
-                    transition="0.2s ease-in-out"
-                    _hover={{
-                      transform: "scale(1.07)",
-                    }}
-                    zIndex="2"
+                    {...cardImgStyle}
                   />
                   <Box mt={5} zIndex="2">
                     <Box display="flex" alignItems="baseline">
-                      <Box
-                        color="gray.500"
-                        fontWeight="semibold"
-                        letterSpacing="wide"
-                        fontSize="xs"
-                        textTransform="uppercase"
-                        ml="2"
-                      />
+                      <Box {...boxStyle} />
                     </Box>
-                    <Box
-                      fontWeight="bold"
-                      fontSize={"14px"}
-                      as="h4"
-                      lineHeight="tight"
-                      textAlign={"center"}
-                      ml={"12px"}
-                    >
+                    <Box {...boxStyle2}>
                       <Text>연인과 가는 아늑한 숙소</Text>
                       <Badge ml={"5px"}>{hotelList.lodgingType}</Badge>
                       {hotelList.lodgingType === "호텔" && (
@@ -1035,12 +843,12 @@ export function HomeBody() {
           </Box>
 
           <Flex>
-            <SimpleGrid columns={4} spacing={10}>
+            <SimpleGrid w={"100%"} columns={4} spacing={10}>
               {listBus.map(
                 (bus) =>
                   bus.typeName === "bus" && (
                     <Box
-                      maxW="sm"
+                      w={"100%"}
                       borderWidth="1px"
                       borderRadius="lg"
                       overflow="hidden"
@@ -1052,6 +860,7 @@ export function HomeBody() {
                         <Box position="relative" overflow={"hidden"}>
                           <Image
                             src={bus.url}
+                            w={"100%"}
                             h={"200px"}
                             transition="0.2s ease-in-out"
                             _hover={{
@@ -1126,7 +935,7 @@ export function HomeBody() {
           />
         </Box>
         <Box w={"65%"} justifyContent={"center"} mt={"40px"}>
-          <Box color={"white"} fontSize={"40px"} fontSize={"1.8rem"}>
+          <Box color={"white"} fontSize={"1.8rem"}>
             항공권 예매
           </Box>
           <Box
@@ -1146,13 +955,12 @@ export function HomeBody() {
           </Box>
 
           <Flex>
-            <SimpleGrid columns={4} spacing={10}>
+            <SimpleGrid w={"100%"} columns={4} spacing={10}>
               {listAir.map(
                 (air) =>
                   air.typeName === "air" && (
                     <Box
                       bg={"white"}
-                      maxW="sm"
                       borderRadius="lg"
                       overflow="hidden"
                       _hover={{ cursor: "pointer" }}
@@ -1181,11 +989,6 @@ export function HomeBody() {
                             </Box>
                             <FormControl>
                               <Flex>
-                                {/*<FormLabel*/}
-                                {/*  fontSize={"1.1rem"}*/}
-                                {/*  textColor={"#509896"}*/}
-                                {/*  fontWeight={"900"}*/}
-                                {/*></FormLabel>*/}
                                 <Box
                                   fontSize={"1.1rem"}
                                   textColor={"#509896"}
