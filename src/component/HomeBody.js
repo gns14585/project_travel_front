@@ -223,7 +223,7 @@ export function HomeBody() {
   };
 
   return (
-    <Box fontWeight={"700"} fontFamily={"GmarketSansMedium"}>
+    <Box minW={"1600px"} fontWeight={"700"} fontFamily={"GmarketSansMedium"}>
       {/* ------------------- 배너이미지 ------------------- */}
       <Box boxShadow={"5px 5px 5px 5px gray"} w={"100%"} h={"100%"}>
         <Flex justifyContent={"space-around"} alignItems={"center"}>

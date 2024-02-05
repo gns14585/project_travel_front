@@ -111,7 +111,7 @@ export function NavBar() {
   }
 
   return (
-    <Box>
+    <Box minW={"1600px"}>
       <Flex
         fontWeight={"700"}
         fontFamily={"GmarketSansMedium"}
